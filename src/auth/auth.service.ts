@@ -8,8 +8,7 @@ import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
-	constructor(private prisma: PrismaService, private jwt: JwtService) {
-	}
+	constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
 	async login(dto: AuthDto) {
 		const user = await this.validateUser(dto);
