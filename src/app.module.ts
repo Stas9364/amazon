@@ -6,11 +6,27 @@ import { PrismaService } from './prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
+import { ReviewModule } from './review/review.module';
+import { CategoryModule } from './category/category.module';
+import { OrderModule } from './order/order.module';
+import { StatisticsModule } from './statistics/statistics.module';
+import { PaginationModule } from './pagination/pagination.module';
 
 @Module({
-	imports: [AuthModule, ConfigModule.forRoot(), UserModule], //import global modules
+	imports: [
+		AuthModule,
+		ConfigModule.forRoot(),
+		UserModule,
+		ProductModule,
+		ReviewModule,
+		CategoryModule,
+		OrderModule,
+		StatisticsModule,
+		PaginationModule,
+	], //import global modules
 	controllers: [AppController],
 	providers: [AppService, PrismaService, JwtStrategy],
-	exports: [] //export current providers
+	exports: [], //export current providers
 })
 export class AppModule {}

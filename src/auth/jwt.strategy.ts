@@ -14,15 +14,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			ignoreExpiration: false,
-			secretOrKey: configService.get('JWT_SECRET')
+			secretOrKey: configService.get('JWT_SECRET'),
 		});
 	}
 
 	async validate({ id }: Pick<User, 'id'>) {
 		return this.prisma.user.findUnique({
 			where: {
-				id: Number(id)
-			}
+				id: Number(id),
+			},
 		});
 	}
 }
