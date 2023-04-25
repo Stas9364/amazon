@@ -9,7 +9,7 @@ import {
 	Post,
 	Put,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { Auth } from '../decorators/auth.decorator';
@@ -17,8 +17,7 @@ import { CategoryDto } from './dto/category.dto';
 
 @Controller('categories')
 export class CategoryController {
-	constructor(private readonly categoryService: CategoryService) {
-	}
+	constructor(private readonly categoryService: CategoryService) {}
 
 	@Get()
 	async getAll() {

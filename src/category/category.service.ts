@@ -6,13 +6,12 @@ import { generateSlug } from '../utils/generate-slug';
 
 @Injectable()
 export class CategoryService {
-	constructor(private prisma: PrismaService) {
-	}
+	constructor(private prisma: PrismaService) {}
 
 	async categoryById(id: number) {
 		const category = await this.prisma.category.findUnique({
 			where: { id },
-			select: returnCategoryObject
+			select: returnCategoryObject,
 		});
 
 		if (!category) throw new NotFoundException('Category not found');
@@ -21,9 +20,10 @@ export class CategoryService {
 	}
 
 	async categoryBySlug(slug: string) {
+		console.log(slug);
 		const slugCategory = await this.prisma.category.findUnique({
 			where: { slug },
-			select: returnCategoryObject
+			select: returnCategoryObject,
 		});
 
 		if (!slugCategory) throw new NotFoundException('Slug not found');
@@ -31,12 +31,12 @@ export class CategoryService {
 		return slugCategory;
 	}
 
-	async categoryByIdOrBySlug(id: number = 0, slug: string = '') {
+	async categoryByIdOrBySlug(id = 0, slug = '') {
 		const value = await this.prisma.category.findFirst({
 			where: {
-				OR: [{ id, slug }]
+				OR: [{ id, slug }],
 			},
-			select: returnCategoryObject
+			select: returnCategoryObject,
 		});
 
 		if (!value) throw new NotFoundException('Result not found');
@@ -51,14 +51,14 @@ export class CategoryService {
 			where: { id },
 			data: {
 				name: dto.name || category.name,
-				slug: generateSlug(dto.name)
-			}
+				slug: generateSlug(dto.name),
+			},
 		});
 	}
 
 	async deleteCategory(id: number) {
 		const del = await this.prisma.category.delete({
-			where: { id }
+			where: { id },
 		});
 
 		return { message: `Category ${del.name} deleted` };
@@ -68,14 +68,14 @@ export class CategoryService {
 		return this.prisma.category.create({
 			data: {
 				name: '',
-				slug: ''
-			}
+				slug: '',
+			},
 		});
 	}
 
 	async getAllCategories() {
 		return this.prisma.category.findMany({
-			select: returnCategoryObject
+			select: returnCategoryObject,
 		});
 	}
 }

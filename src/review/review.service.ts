@@ -1,18 +1,16 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { returnReviewObject } from './return-review.object';
 import { ReviewDto } from './dto/review.dto';
-import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class ReviewService {
-	constructor(private prisma: PrismaService, private productService: ProductService) {
-	}
+	constructor(private prisma: PrismaService) {}
 
 	async getAllReviews() {
 		return await this.prisma.review.findMany({
 			orderBy: { createdAt: 'desc' },
-			select: returnReviewObject
+			select: returnReviewObject,
 		});
 	}
 
@@ -25,21 +23,21 @@ export class ReviewService {
 			data: {
 				...dto,
 				product: {
-					connect: { id: productId }
+					connect: { id: productId },
 				},
 				user: {
-					connect: { id: userId }
-				}
-			}
+					connect: { id: userId },
+				},
+			},
 		});
 	}
 
 	async getAverageRating(productId: number) {
-		return await this.prisma.review.aggregate({
-			where: { productId },
-			_avg: { rating: true }
-		})
+		return await this.prisma.review
+			.aggregate({
+				where: { productId },
+				_avg: { rating: true },
+			})
 			.then(rating => rating._avg);
 	}
-
 }

@@ -1,13 +1,4 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	HttpCode,
-	HttpStatus,
-	Param,
-	Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 
 class CreatePostDto {
@@ -18,5 +9,4 @@ class CreatePostDto {
 @Controller()
 export class AppController {
 	constructor(private readonly appService: AppService) {}
-
 }

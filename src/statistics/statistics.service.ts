@@ -4,19 +4,21 @@ import { UserService } from '../user/user.service';
 
 @Injectable()
 export class StatisticsService {
-	constructor(private prisma: PrismaService, private userService: UserService) {
-	}
+	constructor(
+		private prisma: PrismaService,
+		private userService: UserService
+	) {}
 
 	async getMainStatistics(id: number) {
-		const user = await this.userService.byId( id, {
+		const user = await this.userService.byId(id, {
 			orders: {
 				select: {
 					items: {
-						select: { price: true }
-					}
-				}
+						select: { price: true },
+					},
+				},
 			},
-			reviews: true
+			reviews: true,
 		});
 
 		if (!user) throw new NotFoundException('User not found');
@@ -26,18 +28,20 @@ export class StatisticsService {
 		return [
 			{
 				name: 'Orders',
-				value: user.orders.length
-			},{
-				name: 'Reviews',
-				value: user.reviews.length
-			},{
-				name: 'Favourites',
-				value: user.favourites.length
-			},{
-				name: 'Total amount',
-				value: 1000
+				value: user.orders.length,
 			},
-		]
+			{
+				name: 'Reviews',
+				value: user.reviews.length,
+			},
+			{
+				name: 'Favourites',
+				value: user.favourites.length,
+			},
+			{
+				name: 'Total amount',
+				value: 1000,
+			},
+		];
 	}
-
 }

@@ -5,13 +5,11 @@ import { CurrentUser } from '../decorators/User.decorator';
 
 @Controller('statistics')
 export class StatisticsController {
-	constructor(private readonly statisticsService: StatisticsService) {
-	}
+	constructor(private readonly statisticsService: StatisticsService) {}
 
 	@Auth()
 	@Get()
 	async getStatistics(@CurrentUser('id') id: string) {
 		return this.statisticsService.getMainStatistics(Number(id));
 	}
-
 }
