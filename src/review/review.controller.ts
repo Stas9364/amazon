@@ -4,6 +4,7 @@ import {
 	Get,
 	HttpCode,
 	Param,
+	ParseIntPipe,
 	Post,
 	UsePipes,
 	ValidationPipe,
@@ -28,19 +29,15 @@ export class ReviewController {
 	@HttpCode(200)
 	@Post('leave/:productId')
 	async createReview(
-		@CurrentUser('id') userId: string,
-		@Param('productId') productId: string,
+		@CurrentUser('id', ParseIntPipe) userId: number,
+		@Param('productId', ParseIntPipe) productId: number,
 		@Body() dto: ReviewDto
 	) {
-		return this.reviewService.createReview(
-			Number(userId),
-			Number(productId),
-			dto
-		);
+		return this.reviewService.createReview(userId, productId, dto);
 	}
 
 	@Get(':productId')
-	async getAverageRating(@Param('productId') productId: string) {
-		return this.reviewService.getAverageRating(Number(productId));
+	async getAverageRating(@Param('productId', ParseIntPipe) productId: number) {
+		return this.reviewService.getAverageRating(productId);
 	}
 }

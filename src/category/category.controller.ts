@@ -30,7 +30,7 @@ export class CategoryController {
 		return this.categoryService.categoryById(id);
 	}
 
-	@Get('by-slag/:slug')
+	@Get('by-slug/:slug')
 	async categoryBySlug(@Param('slug') slug: string) {
 		return this.categoryService.categoryBySlug(slug);
 	}

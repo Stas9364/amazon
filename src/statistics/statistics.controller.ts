@@ -8,7 +8,7 @@ export class StatisticsController {
 	constructor(private readonly statisticsService: StatisticsService) {}
 
 	@Auth()
-	@Get()
+	@Get('main')
 	async getStatistics(@CurrentUser('id') id: string) {
 		return this.statisticsService.getMainStatistics(Number(id));
 	}
